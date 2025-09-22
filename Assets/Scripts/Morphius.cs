@@ -8,6 +8,8 @@ public class Morphius : MonoBehaviour
     public int MorphinTime = 2;
     public int MorphinScale = 2;
 
+    public float MorphinOffset = 0;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -17,7 +19,7 @@ public class Morphius : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float morph = (Mathf.Sin(Time.time * MorphinTime) * MorphinScale)/2 + 1.5f;
+        float morph = (Mathf.Sin((Time.time + MorphinOffset) * MorphinTime) * MorphinScale)/2 + 1.5f;
 
         Scale.x = morph;
         Scale.y = MorphinScale + 1 - morph;

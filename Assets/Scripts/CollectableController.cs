@@ -24,4 +24,12 @@ public class CollectableController : MonoBehaviour
         rb.linearVelocity = new Vector2(Speed * randomized_speed * -1, 0);
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("CollectableKillWall"))
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
 }

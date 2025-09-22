@@ -5,6 +5,7 @@ public class RotatererScript : MonoBehaviour
 {
     public Quaternion Rotation;
     public int SpinSpeed = 100;
+    public int SpinOffset = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -14,7 +15,7 @@ public class RotatererScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Rotation = Quaternion.Euler(0, 0, Time.time*SpinSpeed);
+        Rotation = Quaternion.Euler(0, 0, (Time.time + SpinOffset) *SpinSpeed);
         transform.rotation = Rotation;
     }
 }

@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -80,11 +82,18 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Coin"))
         {
             string coin_str = collision.gameObject.GetComponent<CoinScript>().getTestString();
+            maxnumjumps++;
+            print("Max Jumps is now " + maxnumjumps);
         }
         else if (collision.gameObject.CompareTag("Hat"))
         {
             GameObject hat = collision.gameObject;
             equipDoubleJumpHat(hat);
+        }
+
+        else if (collision.CompareTag("KillFloor"))
+        {
+            SceneManager.LoadScene("SampleScene");
         }
     }
 
@@ -92,9 +101,11 @@ public class PlayerController : MonoBehaviour
     private void equipDoubleJumpHat(GameObject hat)
     {
         print("IN HAT");
-        hat.transform.position = this.transform.position; //doubleJumpHatLocation.transform.position;
+        hat.transform.position = this.transform.position;
         hat.transform.rotation = this.transform.rotation;
         hat.gameObject.transform.SetParent(this.gameObject.transform);
+
+        hat.GetComponent<CircleCollider2D>().enabled = false;
     }
 }
 

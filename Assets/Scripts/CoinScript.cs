@@ -6,7 +6,7 @@ public class CoinScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print("COLLISION OCCURED!!!!!");
+        //print("COLLISION OCCURED!!!!!");
         if (collision.gameObject.CompareTag("Player"))
         {
             Destroy(this.gameObject);
