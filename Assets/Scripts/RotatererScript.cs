@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class RotatererScript : MonoBehaviour
 {
-    public Quaternion Rotation = new Quaternion(0, 0, 0, 0);
+    public Quaternion Rotation;
+    public int SpinSpeed = 100;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -12,8 +14,7 @@ public class RotatererScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Rotation = new Quaternion(0, 0, (Time.time*10)%1, 0);
+        Rotation = Quaternion.Euler(0, 0, Time.time*SpinSpeed);
         transform.rotation = Rotation;
-        //print(Rotation);
     }
 }

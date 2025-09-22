@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public GameObject doubleJumpHatLocation;
     Rigidbody2D rb;
     private float input_horizontal;
     private float input_vertical;
@@ -9,11 +10,19 @@ public class PlayerController : MonoBehaviour
     public float verticalMoveSpeed;
     private int maxnumjumps;
     private int numjumps;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Debug.Log("Hello from Redball!!!");
         rb = GetComponent<Rigidbody2D>();
+
+        input_vertical = 6;
+        horizontalMoveSpeed = 5;
+        verticalMoveSpeed = 10;
+
+        maxnumjumps = 1;
+        numjumps = maxnumjumps;
     }
 
     // Update is called once per frame
@@ -21,13 +30,8 @@ public class PlayerController : MonoBehaviour
     {
         movePlayerLateral();
         jump();
-        input_vertical = 20;
-        horizontalMoveSpeed = 5;
-        verticalMoveSpeed = 10;
 
-        maxnumjumps = 1;
-        numjumps = maxnumjumps;
-}
+    }
 
     private void movePlayerLateral()
     {
@@ -40,15 +44,11 @@ public class PlayerController : MonoBehaviour
     }
     private void jump()
     {
-
-        if (Input.GetKeyDown(KeyCode.Space) && numjumps <= maxnumjumps)
+        //print("numjumps == " + numjumps);
+        if (Input.GetKeyDown(KeyCode.Space) && numjumps < maxnumjumps)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, verticalMoveSpeed * input_vertical);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y + input_vertical);
             numjumps++;
-        }
-        else
-        {
-            print("CANNOT JUMP!!!!!");
         }
     }
 
@@ -70,17 +70,31 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             numjumps = 0;
+            //print("Max jumps now 0!!!!");
         }
     }
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("PinkCollectable"))
+        if (collision.gameObject.CompareTag("Coin"))
         {
             string coin_str = collision.gameObject.GetComponent<CoinScript>().getTestString();
-            print(coin_str);
         }
+        else if (collision.gameObject.CompareTag("Hat"))
+        {
+            GameObject hat = collision.gameObject;
+            equipDoubleJumpHat(hat);
+        }
+    }
+
+
+    private void equipDoubleJumpHat(GameObject hat)
+    {
+        print("IN HAT");
+        hat.transform.position = this.transform.position; //doubleJumpHatLocation.transform.position;
+        hat.transform.rotation = this.transform.rotation;
+        hat.gameObject.transform.SetParent(this.gameObject.transform);
     }
 }
 
