@@ -13,6 +13,10 @@ public class PlayerController : MonoBehaviour
     private int maxnumjumps;
     private int numjumps;
 
+    private Vector3 TP_Location = new Vector3(0, 0, 0);
+
+    private GameObject TP_Coin;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -81,7 +85,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Coin"))
         {
-            string coin_str = collision.gameObject.GetComponent<CoinScript>().getTestString();
+            //string coin_str = collision.gameObject.GetComponent<CoinScript>().getTestString();
             maxnumjumps++;
             print("Max Jumps is now " + maxnumjumps);
         }
@@ -106,6 +110,23 @@ public class PlayerController : MonoBehaviour
         hat.gameObject.transform.SetParent(this.gameObject.transform);
 
         hat.GetComponent<CircleCollider2D>().enabled = false;
+    }
+
+
+    public void setTpLocation(GameObject coin)
+    {
+        if (TP_Coin != null)
+        {
+            Destroy(TP_Coin);
+        }
+        TP_Coin = coin;
+        TP_Location = coin.transform.position;
+    }
+
+    public void TpPlayer()
+    {
+        this.transform.position = TP_Location;
+        Destroy(TP_Coin);
     }
 }
 

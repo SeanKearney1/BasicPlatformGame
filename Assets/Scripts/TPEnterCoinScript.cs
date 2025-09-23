@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class CoinScript : MonoBehaviour
+public class TPEnterCoinScript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void OnTriggerEnter2D(Collider2D collision)
@@ -9,12 +9,9 @@ public class CoinScript : MonoBehaviour
         //print("COLLISION OCCURED!!!!!");
         if (collision.gameObject.CompareTag("Player"))
         {
+            collision.gameObject.GetComponent<PlayerController>().TpPlayer();
+            
             Destroy(this.gameObject);
         }
-
-    }
-
-    public string getTestString() {
-        return "Hello from coin";
     }
 }
